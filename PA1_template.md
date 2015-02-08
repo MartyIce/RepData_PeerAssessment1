@@ -15,7 +15,8 @@ Show any code that is needed to
 
 The following function simply loads the CSV data, and removes NA rows:
 
-```{r simpleLoadData}
+
+```r
 loaddata <- function() {
   activity <- read.csv('activity.csv')
   activity <- na.omit(activity)
@@ -38,7 +39,8 @@ For this section, the following code will facilitate:
 
 Below is the histogram depicting the total steps per day, and the mean and median values for the total steps per day:
 
-```{r question1}
+
+```r
 library(ggplot2)
 plotPerDay <- function(agg, ylab) {
   qplot(agg$x, binwidth=.5)
@@ -73,12 +75,20 @@ question1 <- function() {
 question1();
 ```
 
+![plot of chunk question1](figure/question1-1.png) 
+
+```
+## [1] "Mean total per day:  10766.1886792453"
+## [1] "Median total per day:  10765"
+```
+
 ## What is the average daily activity pattern?
 
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r question2}
+
+```r
 aggPerInterval <- function(df, calc) {
   perInterval <- aggregate(df$steps, by = list(df$interval), calc)
   perInterval$names <- perInterval$Group.1
@@ -96,6 +106,12 @@ question2 <- function() {
 question2()
 ```
 
+![plot of chunk question2](figure/question2-1.png) 
+
+```
+## [1] "Interval with maximum avg number of steps:  835  steps:  206.169811320755"
+```
+
 ## Imputing missing values
 
 Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.
@@ -110,7 +126,8 @@ For this section, the following code will facilitate:
 1. Calculate and print total # of missing values
 2. Fill missing values with the mean value of the corresponding interval
 
-```{r question3}
+
+```r
 activityWithNoNas <- function() {
   act  <- read.csv('activity.csv')
   # fill missing with interval mean
@@ -140,6 +157,17 @@ question3 <- function() {
 question3()
 ```
 
+```
+## [1] "totalMissing:  2304"
+```
+
+![plot of chunk question3](figure/question3-1.png) 
+
+```
+## [1] "Mean total per day:  10766.1886792453"
+## [1] "Median total per day:  11015"
+```
+
 These numbers differ by those presented in the first question, but not by a large amount.  The reasoning for this is because we are using the mean value for each interval, the differences between using NAs and means for the intervals is not significant.
 
 
@@ -150,7 +178,8 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:
 
-```{r question4}
+
+```r
 library(lattice)
 question4 <- function() {
   act <- activityWithNoNas();
@@ -168,3 +197,5 @@ question4 <- function() {
 }
 question4()
 ```
+
+![plot of chunk question4](figure/question4-1.png) 
